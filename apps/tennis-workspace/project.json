@@ -1,0 +1,64 @@
+{
+  "name": "tennis-workspace",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/tennis-workspace/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/tennis-workspace",
+        "main": "apps/tennis-workspace/src/main.ts",
+        "tsConfig": "apps/tennis-workspace/tsconfig.app.json",
+        "assets": ["apps/tennis-workspace/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/tennis-workspace/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "tennis-workspace:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "tennis-workspace:build:development"
+        },
+        "production": {
+          "buildTarget": "tennis-workspace:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/tennis-workspace/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/tennis-workspace/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
