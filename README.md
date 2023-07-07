@@ -10,54 +10,119 @@
 To start the development server run `nx serve tennis-workspace`. Open your browser and navigate to http://localhost:4200/. Happy coding!
 
 
-## Generate code
-
-If you happen to use Nx plugins, you can leverage code generators that might come with it.
-
-Run `nx list` to get a list of available plugins and whether they have generators. Then run `nx list <plugin-name>` to see what generators are available.
-
-Learn more about [Nx generators on the docs](https://nx.dev/plugin-features/use-code-generators).
-
 ## Running tasks
-
-To execute tasks with Nx use the following syntax:
-
 ```
-nx <target> <project> <...options>
+npm run test:workspace
 ```
 
-You can also run multiple targets:
+# Tennis Calculator
 
-```
-nx run-many -t <target1> <target2>
-```
+The tennis calculator takes a set of scores as inputs and produces useful statistics based on those scores.
 
-..or add `-p` to filter specific projects
+This calculator will use a simplified version of scoring where whoever gets to 6 games first wins the set
 
-```
-nx run-many -t <target1> <target2> -p <proj1> <proj2>
-```
+## Overview
 
-Targets can be defined in the `package.json` or `projects.json`. Learn more [in the docs](https://nx.dev/core-features/run-tasks).
+The Tennis Calculator takes inputs in the form of a list of points of a tennis match. 
 
-## Want better Editor Integration?
+Given this list of points, it will calculate the "games", "sets" and "matches" results.
 
-Have a look at the [Nx Console extensions](https://nx.dev/nx-console). It provides autocomplete support, a UI for exploring and running tasks & generators, and more! Available for VSCode, IntelliJ and comes with a LSP for Vim users.
+From there it can be queried about various statistics around the input matches it received. 
 
-## Ready to deploy?
+## Input
 
-Just run `nx build demoapp` to build the application. The build artifacts will be stored in the `dist/` directory, ready to be deployed.
+The input will have some header lines, and then a list of points. 
+For example:, the following would result in 2 games to "Person A":
 
-## Set up CI!
+    Match: 01
+    Person A vs Person B
+    0
+    1
+    0
+    1
+    0
+    0
+    0
+    0
+    0
+    0
 
-Nx comes with local caching already built-in (check your `nx.json`). On CI you might want to go a step further.
+10 rows
+    
+The first row is a match id, the second row shows who is playing against whom.
+After that are a series of points, where 0 is a point for the first person listed, 1 is for last person.
 
-- [Set up remote caching](https://nx.dev/core-features/share-your-cache)
-- [Set up task distribution across multiple machines](https://nx.dev/core-features/distribute-task-execution)
-- [Learn more how to setup CI](https://nx.dev/recipes/ci)
+i.e.
 
-## Connect with us!
+| Input                | Score   |
+|----------------------|---------|
+| Match: 01            |         |
+| Person A vs Person B |         |
+| 0                    | 15 - 0  |
+| 1                    | 15 - 15 |
+| 0                    | 30 - 15 |
+| 1                    | 30 - 30 |
+| 0                    | 40 - 30 |
+| 0                    | Game    |
+| 0                    | 15 - 0  |
+| 0                    | 30 - 0  |
+| 0                    | 40 - 0  |
+| 0                    | Game    |
 
-- [Join the community](https://nx.dev/community)
-- [Subscribe to the Nx Youtube Channel](https://www.youtube.com/@nxdevtools)
-- [Follow us on Twitter](https://twitter.com/nxdevtools)
+
+For processing, blank lines must be ignored
+
+## Queries
+
+### Query match result
+Query scores for a particular match
+Prints who defeated whom, and the result of the sets for the match (winning player score first).
+
+Query: `Score Match <id>`
+
+Example: `Score Match 01`
+
+Example output:
+
+    Person A defeated Person B
+    2 sets to 0
+ 
+### Query games for player
+Prints a summary of games won vs lost for a particular player over the tournament
+Query: `Games Player <Player Name>`
+
+Example: `Games Player Person A`
+
+Example output:
+
+    23 17
+
+## Sample output
+Running the application against the 'full_tournament.txt' file results in the following:
+
+    $ python tennis_calculator_app.py test/test_data/full_tournament.txt << EOF
+    Score Match 02
+    Games Player Person A
+    EOF
+    
+    Person C defeated Person A
+    2 sets to 1
+    
+    23 17
+    
+
+
+## Scoring Rules
+Details of tennis scoring can be found online. See here for reference:  
+https://en.wikipedia.org/wiki/Tennis_scoring_system
+
+The variation used for this application is a best of 3 sets match, with first to 6 games wins a set. 
+
+Details as follows:
+* A tennis match is split up into points, games and sets.
+* Winning a game requires a person to win 4 points, but they must be ahead by at least 2 points (deuce, advantage						, game)
+* The first player to win 6 games wins a set. I.e:
+    * Players do NOT need to be ahead by 2 to win a set (6-5 finishes a set) 
+    * There is nothing special about that final game in a set. All games are the same.
+* Best of 3 sets (first to 2 sets wins).
+
