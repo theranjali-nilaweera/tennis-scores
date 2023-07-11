@@ -6,7 +6,7 @@ import { Match } from '../types/Match';
 
 @Injectable()
 export class ScoreReaderService {
-  readScoreFile(scoreFileName ='full_tournament.txt'): IScoreFile {
+  readScoreFile(scoreFileName = 'full_tournament.txt'): IScoreFile {
     const fileContent = this.readFile(scoreFileName);
     if (!fileContent) {
       throw new Error('Invalid file');
@@ -14,7 +14,7 @@ export class ScoreReaderService {
 
     const lines = fileContent.split('\n');
     const matchIndexes = this.findMatchIndexes(lines);
-    if(matchIndexes.length === 0) {
+    if (matchIndexes.length === 0) {
       throw new Error('No matches found');
     }
 
@@ -27,12 +27,12 @@ export class ScoreReaderService {
   }
 
   private readFile(scoreFileName: string): string {
-    const scoreFile = path.join(
-      __dirname,
-      '..',
-      'assets',
-      scoreFileName,
-    );
+    const assetsPath =
+      process.env.NODE_ENV === 'production'
+        ? path.resolve(__dirname, 'assets')
+        : path.join(__dirname, '../assets');
+    console.log('assetsPath', assetsPath, process.env.NODE_ENV);
+    const scoreFile = path.join(assetsPath, scoreFileName);
     return fs.readFileSync(scoreFile, 'utf8');
   }
 
@@ -49,7 +49,7 @@ export class ScoreReaderService {
     const matches: Match[] = matchIndexes.reduce((acc, matchIndex, index) => {
       const nextMatchIndex = matchIndexes[index + 1];
 
-      const matchNumber = +(lines[matchIndex].split(': ')[1]);
+      const matchNumber = +lines[matchIndex].split(': ')[1];
       const players = lines[matchIndex + 1].split(' vs ');
       const rawScores = lines
         .slice(matchIndex + 2, nextMatchIndex)
@@ -67,5 +67,4 @@ export class ScoreReaderService {
 
     return matches;
   }
-
 }

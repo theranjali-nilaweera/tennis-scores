@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ScoreReaderService } from '../score/score-reader.service';
 import { IScoreFile } from '../types/ScoreFile';
 import { ScoreCalculatorService } from '../score/score-calculator.service';
@@ -47,12 +47,14 @@ export class TournamentService {
     return scoreFile;
   }
 
-  getScore(matchNumber: string): TournamentScore {
+  getScore(matchNumber: string): TournamentScore | null{
     const matchId = parseInt(matchNumber);
-    if(isNaN(matchId)) throw new Error('Invalid match number');
+    if(isNaN(matchId)) throw new BadRequestException(`Match number should be a number`);
 
     const scoreFile: IScoreFile = this.processScores();
     const matchScore = scoreFile?.matchScores?.find(match => match.matchNumber === matchId);
+
+    if(matchScore === undefined) return null;
 
     const [winnerName, opponentName] = matchScore.matchWinner==='player1'?[matchScore.player1Name,matchScore.player2Name]:[matchScore.player2Name,matchScore.player1Name];
     const [winnerSets, opponentSets] = matchScore.matchWinner==='player1'?[matchScore.player1SetsWon,matchScore.player2SetsWon]:[matchScore.player2SetsWon,matchScore.player1SetsWon];

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test:workspace": "nx test tennis-workspace --watch"
+    "test:watch": "nx test tennis-workspace --watch",
+    "test": "nx test tennis-workspace"
   },
   "private": true,
   "dependencies": {
