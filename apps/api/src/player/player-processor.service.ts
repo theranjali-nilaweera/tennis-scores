@@ -38,12 +38,5 @@ export class PlayerProcessorService {
     player.setsWon += matchScore[`${currentPlayerNumber}SetsWon`];
     player.setsLost += matchScore[`${opponentNumber}SetsWon`];
     return player;
-    // }
-
-    // player.gamesWon += matchScore[`${opponentNumber}GamesWon`];
-    // player.gamesLost += matchScore[`${currentPlayerNumber}GamesWon`];
-    // player.setsWon += matchScore[`${opponentNumber}SetsWon`];
-    // player.setsLost += matchScore[`${currentPlayerNumber}SetsWon`];
-    // return player;
   }
 }

@@ -5,7 +5,6 @@ import { MatchScore } from '../types/Match';
 import { ScoreCalculatorService } from '../score/score-calculator.service';
 import { ScoreReaderService } from '../score/score-reader.service';
 import { PlayerProcessorService } from '../player/player-processor.service';
-import { TournamentScore } from './TournamentScore';
 
 describe('TournamentScoreController', () => {
   let controller: TournamentScoreController;

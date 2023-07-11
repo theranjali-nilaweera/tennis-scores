@@ -23,6 +23,7 @@ export class ScoreReaderService {
       matchIndexes,
       matches: this.populateMatches(matchIndexes, lines),
       matchScores: [],
+      players: new Map(),
     };
   }
 

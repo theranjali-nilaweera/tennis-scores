@@ -6,6 +6,7 @@ import { MatchScore } from '../types/Match';
 import { Player } from '../player/Player';
 import { PlayerProcessorService } from '../player/player-processor.service';
 import { TournamentScore } from './TournamentScore';
+import { TournamentGame } from './TournamentGame';
 
 @Injectable()
 export class TournamentService {
@@ -43,7 +44,7 @@ export class TournamentService {
       );
     });
     scoreFile.matchScores = matcheScores;
-
+    scoreFile.players = players;
     return scoreFile;
   }
 
@@ -74,6 +75,20 @@ export class TournamentService {
       opponentName,
       winnerSets,
       opponentSets,
+    };
+  }
+
+  getGames(playerName: string): TournamentGame {
+    const scoreFile: IScoreFile = this.processScores();
+    const player = scoreFile.players?.get(playerName);
+
+    if (player === undefined)
+      throw new BadRequestException(`Player ${playerName} not found`);
+
+    return {
+      playerName,
+      gamesWon: player.gamesWon,
+      gamesLost: player.gamesLost,
     };
   }
 }
