@@ -4,7 +4,6 @@ import { PlayerProcessorService } from '../player/player-processor.service';
 import { ScoreCalculatorService } from '../score/score-calculator.service';
 import { ScoreReaderService } from '../score/score-reader.service';
 
-
 describe('TournamentService', () => {
   let service: TournamentService;
 

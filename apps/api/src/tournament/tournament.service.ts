@@ -18,7 +18,7 @@ export class TournamentService {
   @Inject(PlayerProcessorService)
   private readonly playerProcessor: PlayerProcessorService;
 
-  processScores():IScoreFile {
+  processScores(): IScoreFile {
     const scoreFile: IScoreFile = this.scoreReader.readScoreFile();
     const matcheScores: MatchScore[] = [];
     const players = new Map<string, Player>();
@@ -43,29 +43,37 @@ export class TournamentService {
       );
     });
     scoreFile.matchScores = matcheScores;
-    
+
     return scoreFile;
   }
 
-  getScore(matchNumber: string): TournamentScore | null{
+  getScore(matchNumber: string): TournamentScore | null {
     const matchId = parseInt(matchNumber);
-    if(isNaN(matchId)) throw new BadRequestException(`Match number should be a number`);
+    if (isNaN(matchId))
+      throw new BadRequestException(`Match number should be a number`);
 
     const scoreFile: IScoreFile = this.processScores();
-    const matchScore = scoreFile?.matchScores?.find(match => match.matchNumber === matchId);
+    const matchScore = scoreFile?.matchScores?.find(
+      (match) => match.matchNumber === matchId
+    );
 
-    if(matchScore === undefined) return null;
+    if (matchScore === undefined) return null;
 
-    const [winnerName, opponentName] = matchScore.matchWinner==='player1'?[matchScore.player1Name,matchScore.player2Name]:[matchScore.player2Name,matchScore.player1Name];
-    const [winnerSets, opponentSets] = matchScore.matchWinner==='player1'?[matchScore.player1SetsWon,matchScore.player2SetsWon]:[matchScore.player2SetsWon,matchScore.player1SetsWon];
-    
-    return { 
+    const [winnerName, opponentName] =
+      matchScore.matchWinner === 'player1'
+        ? [matchScore.player1Name, matchScore.player2Name]
+        : [matchScore.player2Name, matchScore.player1Name];
+    const [winnerSets, opponentSets] =
+      matchScore.matchWinner === 'player1'
+        ? [matchScore.player1SetsWon, matchScore.player2SetsWon]
+        : [matchScore.player2SetsWon, matchScore.player1SetsWon];
+
+    return {
       matchNumber: matchId,
       winnerName,
       opponentName,
       winnerSets,
       opponentSets,
-    }
+    };
   }
-
 }

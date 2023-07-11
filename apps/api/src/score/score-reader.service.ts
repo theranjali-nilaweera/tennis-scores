@@ -28,9 +28,10 @@ export class ScoreReaderService {
 
   private readFile(scoreFileName: string): string {
     const assetsPath =
-      process.env.NODE_ENV === 'production'
-        ? path.resolve(__dirname, 'assets')
-        : path.join(__dirname, '../assets');
+      process.env.NODE_ENV === 'test'
+        ? path.join(__dirname, '../assets'):
+        path.resolve(__dirname, 'assets')
+        
     console.log('assetsPath', assetsPath, process.env.NODE_ENV);
     const scoreFile = path.join(assetsPath, scoreFileName);
     return fs.readFileSync(scoreFile, 'utf8');

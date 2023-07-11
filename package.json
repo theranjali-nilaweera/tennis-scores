@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test:watch": "nx test tennis-workspace --watch",
-    "test": "nx test tennis-workspace"
+    "test:api:watch": "nx test api --watch",
+    "test:api": "nx test api",
+    "build:api": "nx build api",
+    "serve:api": "nx serve api",
+    "serve:api:prod": "npm run build:api && NODE_ENV=production node dist/apps/api/main.js"
   },
   "private": true,
   "dependencies": {

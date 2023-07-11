@@ -31,8 +31,8 @@ describe('PlayerProcessorService', () => {
       sets: [],
     };
 
-    const player1Summary = service.processPlayers(matchScore, 'player1', null);  
-    const player2Summary = service.processPlayers(matchScore, 'player2', null);  
+    const player1Summary = service.processPlayers(matchScore, 'player1', null);
+    const player2Summary = service.processPlayers(matchScore, 'player2', null);
 
     expect(player1Summary).toBeDefined();
     expect(player1Summary.name).toEqual('player1');

@@ -18,7 +18,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
 
   // app.useStaticAssets(path.join(__dirname,'..','assets'));
-  
+
   const config = new DocumentBuilder()
     .setTitle('Tennis Tournament Score API')
     .setDescription('The Tennis Tournament Score API')

@@ -3,11 +3,9 @@ import { PlayerProcessorService } from './player-processor.service';
 import { ScoreModule } from '../score/score.module';
 
 @Module({
-  imports: [ ScoreModule ],
-  providers: [
-    PlayerProcessorService,
-  ],
+  imports: [ScoreModule],
+  providers: [PlayerProcessorService],
   controllers: [],
-  exports: [ PlayerProcessorService ],
+  exports: [PlayerProcessorService],
 })
 export class PlayerModule {}

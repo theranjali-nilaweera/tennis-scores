@@ -12,9 +12,7 @@ describe('TournamentScoreController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [
-        TournamentScoreController,
-      ],
+      controllers: [TournamentScoreController],
       providers: [
         TournamentService,
         ScoreCalculatorService,

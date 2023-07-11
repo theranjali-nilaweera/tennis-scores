@@ -29,15 +29,14 @@ describe('ScoreReaderService', () => {
         return;
       }
       console.log(node.value);
-    }
-
+    };
 
     expect(service.readScoreFile().lineCount).toBe(167);
   });
 
   it('WHEN matches present SHOULD give their indexes', () => {
     const result = service.readScoreFile();
-    
+
     expect(result.matchIndexes.length).toBe(2);
     expect(result.matchIndexes[0]).toBe(0);
     expect(result.matchIndexes[1]).toBe(50);
@@ -52,5 +51,4 @@ describe('ScoreReaderService', () => {
     expect(result.matches[0].player2Name).toBe('Person B');
     expect(result.matches[0].rawScores.length).toBe(48);
   });
-
 });

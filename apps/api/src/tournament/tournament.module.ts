@@ -5,10 +5,8 @@ import { TournamentService } from './tournament.service';
 import { ScoreModule } from '../score/score.module';
 
 @Module({
-  imports: [ PlayerModule, ScoreModule ],
-  providers: [
-    TournamentService,
-  ],
+  imports: [PlayerModule, ScoreModule],
+  providers: [TournamentService],
   controllers: [TournamentScoreController],
 })
 export class TournamentModule {}
