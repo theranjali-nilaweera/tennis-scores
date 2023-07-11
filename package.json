@@ -7,7 +7,7 @@
     "test:api": "nx test api",
     "build:api": "nx build api",
     "serve:api": "nx serve api",
-    "serve:api:prod": "npm run build:api && NODE_ENV=production node dist/apps/api/main.js"
+    "start": "npm run build:api && NODE_ENV=production node dist/apps/api/main.js"
   },
   "private": true,
   "dependencies": {
