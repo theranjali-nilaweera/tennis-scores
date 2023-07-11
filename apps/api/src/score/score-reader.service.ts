@@ -33,7 +33,6 @@ export class ScoreReaderService {
         ? path.join(__dirname, '../assets'):
         path.resolve(__dirname, 'assets')
         
-    console.log('assetsPath', assetsPath, process.env.NODE_ENV);
     const scoreFile = path.join(assetsPath, scoreFileName);
     return fs.readFileSync(scoreFile, 'utf8');
   }
