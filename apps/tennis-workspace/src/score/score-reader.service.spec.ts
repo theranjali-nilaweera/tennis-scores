@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ScoreReaderService } from './score-reader.service';
-import exp from 'constants';
 
 describe('ScoreReaderService', () => {
   let service: ScoreReaderService;
@@ -17,11 +16,22 @@ describe('ScoreReaderService', () => {
     expect(service).toBeDefined();
   });
 
-  it('WHEN file is present SHOULD return file content', () => {
-    expect(service.readScoreFile()).toBeDefined();
-  });
+  // it('WHEN file is not present SHOULD throw error', () => {
+  //   expect(service.readScoreFile('test')).rejects.toThrowError();
+  // });
 
   it('WHEN newline SHOULD return array of lines', () => {
+    /**
+     * linked list traversal
+     */
+    const traversal = (node) => {
+      if (node === null) {
+        return;
+      }
+      console.log(node.value);
+    }
+
+
     expect(service.readScoreFile().lineCount).toBe(167);
   });
 
@@ -37,10 +47,10 @@ describe('ScoreReaderService', () => {
     const result = service.readScoreFile();
 
     expect(result.matches.length).toBe(2);
-    expect(result.matches[0].matchName).toBe('Match: 01');
+    expect(result.matches[0].matchNumber).toBe(1);
     expect(result.matches[0].player1Name).toBe('Person A');
     expect(result.matches[0].player2Name).toBe('Person B');
-    expect(result.matches[0].scores.length).toBe(48);
+    expect(result.matches[0].rawScores.length).toBe(48);
   });
 
 });

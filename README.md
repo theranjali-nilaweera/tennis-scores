@@ -126,3 +126,7 @@ Details as follows:
     * There is nothing special about that final game in a set. All games are the same.
 * Best of 3 sets (first to 2 sets wins).
 
+what happens to a game if a person is only ahead by 1 point or is getting same points after each, how long would it go on for 
+
+
+

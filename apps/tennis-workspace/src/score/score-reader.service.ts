@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import fs from 'fs';
 import path from 'path';
-import { IScoreFile } from './ScoreFile';
-import { IMatch } from './Match';
+import { IScoreFile } from '../types/ScoreFile';
+import { Match } from '../types/Match';
 
 @Injectable()
 export class ScoreReaderService {
@@ -21,7 +21,8 @@ export class ScoreReaderService {
     return {
       lineCount: lines.length,
       matchIndexes,
-      matches: this.findMatches(matchIndexes, lines),
+      matches: this.populateMatches(matchIndexes, lines),
+      matchScores: [],
     };
   }
 
@@ -44,21 +45,22 @@ export class ScoreReaderService {
     }, []);
   }
 
-  private findMatches(matchIndexes: number[], lines: string[]): IMatch[] {
-    const matches: IMatch[] = matchIndexes.reduce((acc, matchIndex, index) => {
+  private populateMatches(matchIndexes: number[], lines: string[]): Match[] {
+    const matches: Match[] = matchIndexes.reduce((acc, matchIndex, index) => {
       const nextMatchIndex = matchIndexes[index + 1];
 
-      const matchName = lines[matchIndex];
+      const matchNumber = +(lines[matchIndex].split(': ')[1]);
       const players = lines[matchIndex + 1].split(' vs ');
-      const scores = lines
+      const rawScores = lines
         .slice(matchIndex + 2, nextMatchIndex)
-        .map((score) => parseInt(score, 10));
+        .filter((line) => !isNaN(parseInt(line)))
+        .map((score) => +score);
 
       acc.push({
-        matchName,
+        matchNumber,
         player1Name: players[0],
         player2Name: players[1],
-        scores,
+        rawScores,
       });
       return acc;
     }, []);
