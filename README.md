@@ -27,6 +27,8 @@ https://tennis-api.adaptable.app/api#
 
 Dev mode
 ```
+fnm use
+npm i
 npm run serve:api
 ```
 
