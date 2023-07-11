@@ -43,7 +43,7 @@ For more scripts check the package.json scripts
 
 ## Tests
 Test all
-![picture alt](https://github.com/theranjali-nilaweera/tennis-scores/blob/main/tests.png "tests")
+![picture alt](https://github.com/theranjali-nilaweera/tennis-scores/blob/main/all-tests.png "tests")
 
 
 ## TODO Improvements
